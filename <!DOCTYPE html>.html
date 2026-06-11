@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Тест: Какой вы первооткрыватель? | КамГУ им. Витуса Беринга</title>
+    <style>
+        /* ===== ПОДКЛЮЧАЕМ ОФИЦИАЛЬНЫЙ ШРИФТ КАМГУ ===== */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+
+        /* ===== ПЕРЕМЕННЫЕ ЦВЕТОВ ИЗ БРЕНДБУКА ===== */
+        :root {
+            --kamgu-deep-blue: #0f2954;   /* Глубокий синий (основной) */
+            --kamgu-sun-orange: #f04e23;  /* Оранжевый (акцентный) */
+            --bg-light: #F5F7FA;
+            --text-dark: #1E2A3E;
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.2s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(145deg, #f0f4fa 0%, #e2e8f0 100%);
+            color: var(--text-dark);
+            line-height: 1.5;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Основной контейнер */
+        .kamgu-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 32px;
+            box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            backdrop-filter: blur(2px);
+        }
+
+        /* ===== ХЕДЕР С КАРТИНКОЙ ВОЛН (полупрозрачная) ===== */
+        .kamgu-header {
+            background: var(--kamgu-deep-blue);
+            padding: 1.8rem 2rem;
+            text-align: center;
+            border-bottom: 4px solid var(--kamgu-sun-orange);
+            position: relative;
+            overflow: hidden;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 300' preserveAspectRatio='none'%3E%3Cpath fill='rgba(255,255,255,0.12)' d='M0,192L60,176C120,160,240,128,360,138.7C480,149,600,203,720,213.3C840,224,960,192,1080,176C1140,168,1200,176,1200,176L1200,0L1140,0C1080,0,960,0,840,0C720,0,600,0,480,0C360,0,240,0,120,0C60,0,0,0,0,0Z'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: repeat-x;
+            background-position: bottom;
+            background-size: 1200px 80px;
+        }
+        .kamgu-header::before {
+            display: none;
+        }
+
+        .kamgu-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+            color: white;
+            margin-bottom: 0.8rem;
+        }
+        .kamgu-logo span {
+            color: var(--kamgu-sun-orange);
+        }
+        .kamgu-header h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+        .kamgu-header h1 small {
+            font-size: 0.9rem;
+            font-weight: 500;
+            opacity: 0.85;
+            display: inline-block;
+            margin-left: 0.5rem;
+        }
+        .kamgu-sub {
+            font-size: 1rem;
+            opacity: 0.85;
+            max-width: 600px;
+            margin: 0 auto;
+            color: #e0e4ff;
+        }
+
+        /* Блок инструкции */
+        .kamgu-instruction {
+            background: #fff7e6;
+            padding: 1rem 1.8rem;
+            margin: 1.5rem 2rem 0;
+            border-radius: 28px;
+            border-left: 6px solid var(--kamgu-sun-orange);
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        /* Сетка качеств */
+        .traits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 0.8rem;
+            padding: 2rem;
+        }
+
+        .trait-item {
+            background: white;
+            border-radius: 60px;
+            border: 1px solid #e2e8f0;
+            transition: var(--transition);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+        }
+        .trait-item:hover {
+            background: #f9fcff;
+            border-color: var(--kamgu-sun-orange);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+        .trait-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.8rem 1.2rem;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        .trait-label input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: var(--kamgu-sun-orange);
+            flex-shrink: 0;
+        }
+        .trait-text {
+            line-height: 1.3;
+        }
+
+        /* Кнопка */
+        .button-area {
+            text-align: center;
+            padding: 0.5rem 2rem 2rem;
+        }
+        .kamgu-btn {
+            background: var(--kamgu-deep-blue);
+            color: white;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            padding: 0.9rem 2.2rem;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 8px 18px -8px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 340px;
+        }
+        .kamgu-btn:hover {
+            background: #1a3f6e;
+            transform: scale(1.02);
+        }
+        .kamgu-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Блок результата */
+        .result-card {
+            background: #ffffffdd;
+            margin: 0 2rem 2rem;
+            padding: 1.8rem;
+            border-radius: 32px;
+            border: 1px solid var(--kamgu-sun-orange);
+            backdrop-filter: blur(4px);
+            transition: 0.3s;
+        }
+        .result-card h3 {
+            font-size: 1.6rem;
+            color: var(--kamgu-deep-blue);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 2px dashed var(--kamgu-sun-orange);
+            padding-bottom: 0.6rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        .result-type {
+            background: rgba(240, 78, 35, 0.15);
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--kamgu-sun-orange);
+        }
+        .result-desc {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: var(--text-dark);
+        }
+        .reset-info {
+            text-align: center;
+            margin: 1rem 2rem 1.5rem;
+            font-size: 0.75rem;
+            color: #6b7a8a;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            padding-top: 1.5rem;
+        }
+        /* Футер */
+        .kamgu-footer {
+            background: var(--kamgu-deep-blue);
+            padding: 1.2rem;
+            text-align: center;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.75rem;
+            font-weight: 500;
+            border-top: 1px solid rgba(240,78,35,0.3);
+        }
+        .kamgu-footer span {
+            color: var(--kamgu-sun-orange);
+        }
+
+        @media (max-width: 650px) {
+            body { padding: 1rem; }
+            .traits-grid { grid-template-columns: 1fr; padding: 1.5rem; gap: 0.6rem; }
+            .kamgu-header h1 { font-size: 1.5rem; }
+            .result-card h3 { font-size: 1.3rem; }
+            .kamgu-instruction { margin: 1rem 1rem 0; }
+            .reset-info { margin: 1rem 1rem 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="kamgu-container">
+    <div class="kamgu-header">
+        <div class="kamgu-logo">КамГУ <span>им. Витуса Беринга</span></div>
+        <h1>Архетип первооткрывателя<small>тест личности</small></h1>
+        <div class="kamgu-sub">Какие черты делают человека настоящим исследователем?</div>
+    </div>
+    <div class="kamgu-instruction">
+        📌 Отметьте <strong>все качества</strong>, которые, по вашему мнению, обязательно должны быть у первооткрывателя.<br>
+        В конце вы узнаете свой ведущий тип.
+    </div>
+
+    <div id="traitsContainer" class="traits-grid"></div>
+
+    <div class="button-area">
+        <button id="submitBtn" class="kamgu-btn"> Узнать мой тип первооткрывателя </button>
+    </div>
+
+    <div id="resultBlock" style="display: none;" class="result-card"></div>
+    <div class="reset-info">✅ можно выбрать любое количество качеств. Результат покажет доминирующий стиль.</div>
+    <div class="kamgu-footer">
+        🌋 <span>Камчатский государственный университет им. Витуса Беринга</span> | Университет первооткрывателей
+    </div>
+</div>
+
+<script>
+    // ----- ДАННЫЕ ТИПОВ И КАЧЕСТВ (привязка к типам 1..7) -----
+    const types = {
+        1: {
+            name: "Целеустремлённый и настойчивый",
+            description: "🧭 Психологический портрет: этот тип отличается высокой способностью к саморегуляции и волевому контролю. Такие люди способны длительное время сохранять концентрацию на задаче, не отступая перед трудностями. Для них характерна внутренняя мотивация и умение доводить начатое до конца, что особенно важно в условиях неопределённости и риска."
+        },
+        2: {
+            name: "Адаптивный и гибкий",
+            description: "🌀 Психологический портрет: представители этого типа легко приспосабливаются к меняющимся условиям, способны оперативно менять стратегию и находить выход из нестандартных ситуаций. Их отличает высокая стрессоустойчивость и открытость переменам. В условиях полевых исследований или экстремальных экспедиций такие люди незаменимы благодаря своей пластичности мышления."
+        },
+        3: {
+            name: "Креативный и нестандартно мыслящий",
+            description: "💡 Психологический портрет: этот тип характеризуется развитым воображением и способностью генерировать новые идеи. Такие первооткрыватели часто предлагают неочевидные подходы к решению задач, умеют видеть скрытые связи и использовать ограниченные ресурсы максимально эффективно."
+        },
+        4: {
+            name: "Коммуникативный и командный",
+            description: "🤝 Психологический портрет: для этого типа критически важны социальные навыки: умение договариваться, поддерживать других, координировать совместные действия. В сложных условиях коллективной работы именно такие люди обеспечивают сплочённость группы и успешное взаимодействие."
+        },
+        5: {
+            name: "Любознательный и открытый новому",
+            description: "🔍 Психологический портрет: эти первооткрыватели движимы внутренним познавательным интересом. Они легко вовлекаются в новые проекты, не боятся неизвестности и готовы к постоянному обучению. Для них процесс познания часто важнее конечного результата."
+        },
+        6: {
+            name: "Выносливый и физически подготовленный",
+            description: "🏔️ Психологический портрет: данный тип выделяется способностью выдерживать длительные физические нагрузки и экстремальные условия среды. Их отличает высокая работоспособность и устойчивость к утомлению."
+        },
+        7: {
+            name: "Уверенный и самоорганизованный",
+            description: "🎯 Психологический портрет: эти люди обладают высокой самооценкой и автономностью. Они умеют структурировать свою деятельность без внешнего контроля, что позволяет им эффективно действовать в изоляции или при дефиците ресурсов."
+        }
+    };
+
+    // Список качеств с привязкой к типу (typeId)
+    const traitsData = [
+        { text: "Целеустремлённость", typeId: 1 },
+        { text: "Упорство", typeId: 1 },
+        { text: "Настойчивость", typeId: 1 },
+        { text: "Стойкость", typeId: 1 },
+        { text: "Решительность", typeId: 1 },
+        { text: "Дисциплина", typeId: 1 },
+        { text: "Трудолюбие", typeId: 1 },
+        { text: "Сила воли", typeId: 1 },
+        { text: "Адаптивность", typeId: 2 },
+        { text: "Гибкость", typeId: 2 },
+        { text: "Находчивость", typeId: 2 },
+        { text: "Умение быстро принимать решения", typeId: 2 },
+        { text: "Креативность", typeId: 3 },
+        { text: "Творческое мышление", typeId: 3 },
+        { text: "Инновационность", typeId: 3 },
+        { text: "Нестандартные решения", typeId: 3 },
+        { text: "Коммуникативность", typeId: 4 },
+        { text: "Командный дух", typeId: 4 },
+        { text: "Умение работать в команде", typeId: 4 },
+        { text: "Любознательность", typeId: 5 },
+        { text: "Открытость к новому", typeId: 5 },
+        { text: "Интерес к открытию нового", typeId: 5 },
+        { text: "Физическая выносливость", typeId: 6 },
+        { text: "Физическая подготовка", typeId: 6 },
+        { text: "Уверенность", typeId: 7 },
+        { text: "Самоорганизация", typeId: 7 },
+        { text: "Самостоятельность", typeId: 7 }
+    ];
+
+    // Функция для случайного перемешивания массива
+    function shuffleArray(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    // Отрисовка перемешанных качеств
+    function renderTraits() {
+        const shuffled = shuffleArray([...traitsData]);
+        const container = document.getElementById("traitsContainer");
+        container.innerHTML = "";
+        shuffled.forEach((trait, idx) => {
+            const div = document.createElement("div");
+            div.className = "trait-item";
+            const label = document.createElement("label");
+            label.className = "trait-label";
+            const cb = document.createElement("input");
+            cb.type = "checkbox";
+            cb.value = trait.typeId;
+            cb.dataset.type = trait.typeId;
+            cb.id = `trait_${idx}`;
+            const span = document.createElement("span");
+            span.className = "trait-text";
+            span.textContent = trait.text;
+            label.appendChild(cb);
+            label.appendChild(span);
+            div.appendChild(label);
+            container.appendChild(div);
+        });
+    }
+
+    // Подсчёт результатов
+    function computeResult() {
+        const checkboxes = document.querySelectorAll('#traitsContainer input[type="checkbox"]');
+        const selectedTypes = { 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0 };
+        let anySelected = false;
+
+        checkboxes.forEach(cb => {
+            if (cb.checked) {
+                anySelected = true;
+                const typeId = parseInt(cb.dataset.type);
+                if (selectedTypes[typeId] !== undefined) selectedTypes[typeId]++;
+            }
+        });
+
+        if (!anySelected) {
+            alert("Пожалуйста, выберите хотя бы одно качество, которое вы считаете важным для первооткрывателя.");
+            return null;
+        }
+
+        let maxCount = -1;
+        let dominantType = 1;
+        for (let t = 1; t <= 7; t++) {
+            if (selectedTypes[t] > maxCount) {
+                maxCount = selectedTypes[t];
+                dominantType = t;
+            }
+        }
+        return dominantType;
+    }
+
+    // Отображение результата
+    function showResult(typeId) {
+        const typeData = types[typeId];
+        if (!typeData) return;
+
+        const resultDiv = document.getElementById("resultBlock");
+        resultDiv.style.display = "block";
+        resultDiv.innerHTML = `
+            <h3>🏆 Ваш ведущий тип: <span class="result-type">${typeData.name}</span></h3>
+            <div class="result-desc">${typeData.description.replace(/\n/g, '<br>')}</div>
+            <hr style="margin: 1rem 0; border-color: #f04e2340;">
+            <p style="font-size:0.85rem; opacity:0.75;">🎯 Результат основан на выбранных качествах. Именно этот архетип оказался ближе всего к вашему представлению об идеальном первооткрывателе.</p>
+        `;
+        resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+
+    // Обработчик кнопки
+    function onAnalyze() {
+        const dominant = computeResult();
+        if (dominant !== null) {
+            showResult(dominant);
+        }
+    }
+
+    // Запуск
+    document.addEventListener("DOMContentLoaded", () => {
+        renderTraits();
+        const btn = document.getElementById("submitBtn");
+        btn.addEventListener("click", onAnalyze);
+        const resultBlock = document.getElementById("resultBlock");
+        if (resultBlock) resultBlock.style.display = "none";
+    });
+</script>
+</body>
+</html>
