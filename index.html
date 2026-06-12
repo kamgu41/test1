@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Тест: Какой вы первооткрыватель? | КамГУ им. Витуса Беринга</title>
+    <title>Какой ты первооткрыватель? | КамГУ им. Витуса Беринга</title>
     <style>
         /* ===== ПОДКЛЮЧАЕМ ОФИЦИАЛЬНЫЙ ШРИФТ КАМГУ ===== */
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
@@ -32,7 +32,6 @@
             padding: 2rem 1.5rem;
         }
 
-        /* Основной контейнер */
         .kamgu-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -43,7 +42,6 @@
             backdrop-filter: blur(2px);
         }
 
-        /* ===== ХЕДЕР С КАРТИНКОЙ ВОЛН (полупрозрачная) ===== */
         .kamgu-header {
             background: var(--kamgu-deep-blue);
             padding: 1.8rem 2rem;
@@ -63,7 +61,6 @@
         .kamgu-logo {
             font-size: 1.5rem;
             font-weight: 800;
-            letter-spacing: -0.3px;
             color: white;
             margin-bottom: 0.8rem;
         }
@@ -76,13 +73,6 @@
             color: white;
             margin-bottom: 0.5rem;
         }
-        .kamgu-header h1 small {
-            font-size: 0.9rem;
-            font-weight: 500;
-            opacity: 0.85;
-            display: inline-block;
-            margin-left: 0.5rem;
-        }
         .kamgu-sub {
             font-size: 1rem;
             opacity: 0.85;
@@ -91,7 +81,6 @@
             color: #e0e4ff;
         }
 
-        /* Блок инструкции */
         .kamgu-instruction {
             background: #fff7e6;
             padding: 1rem 1.8rem;
@@ -102,7 +91,6 @@
             font-size: 0.95rem;
         }
 
-        /* Сетка качеств */
         .traits-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -143,7 +131,6 @@
             line-height: 1.3;
         }
 
-        /* Кнопка */
         .button-area {
             text-align: center;
             padding: 0.5rem 2rem 2rem;
@@ -171,7 +158,6 @@
             transform: scale(0.98);
         }
 
-        /* Блок результата */
         .result-card {
             background: #ffffffdd;
             margin: 0 2rem 2rem;
@@ -207,13 +193,12 @@
         }
         .reset-info {
             text-align: center;
-            margin: 1rem 2rem 1.5rem;
+            margin: 1rem 2rem 1rem;
             font-size: 0.75rem;
             color: #6b7a8a;
             border-top: 1px solid rgba(0,0,0,0.05);
-            padding-top: 1.5rem;
+            padding-top: 1.2rem;
         }
-        /* Футер */
         .kamgu-footer {
             background: var(--kamgu-deep-blue);
             padding: 1.2rem;
@@ -226,6 +211,16 @@
         .kamgu-footer span {
             color: var(--kamgu-sun-orange);
         }
+        .disclaimer {
+            margin: 0 2rem 1.5rem;
+            padding: 0.8rem 1.2rem;
+            background: rgba(240, 78, 35, 0.08);
+            border-radius: 24px;
+            font-size: 0.8rem;
+            text-align: center;
+            color: #4a5b6e;
+            font-style: italic;
+        }
 
         @media (max-width: 650px) {
             body { padding: 1rem; }
@@ -233,7 +228,8 @@
             .kamgu-header h1 { font-size: 1.5rem; }
             .result-card h3 { font-size: 1.3rem; }
             .kamgu-instruction { margin: 1rem 1rem 0; }
-            .reset-info { margin: 1rem 1rem 1.2rem; }
+            .reset-info { margin: 1rem 1rem 1rem; }
+            .disclaimer { margin: 0 1rem 1.2rem; }
         }
     </style>
 </head>
@@ -241,7 +237,7 @@
 <div class="kamgu-container">
     <div class="kamgu-header">
         <div class="kamgu-logo">КамГУ <span>им. Витуса Беринга</span></div>
-        <h1>Архетип первооткрывателя<small>тест личности</small></h1>
+        <h1>Какой ты первооткрыватель?</h1>
         <div class="kamgu-sub">Какие черты делают человека настоящим исследователем?</div>
     </div>
     <div class="kamgu-instruction">
@@ -252,10 +248,15 @@
     <div id="traitsContainer" class="traits-grid"></div>
 
     <div class="button-area">
-        <button id="submitBtn" class="kamgu-btn"> Узнать мой тип первооткрывателя </button>
+        <button id="submitBtn" class="kamgu-btn">✨ Узнать результат ✨</button>
     </div>
 
     <div id="resultBlock" style="display: none;" class="result-card"></div>
+    
+    <div class="disclaimer" id="disclaimerMsg" style="display: none;">
+        📌 Данный опросник не является профессиональным инструментом диагностики, но точно помогает узнать, каким первооткрывателем ты обязательно станешь в КамГУ им. Витуса Беринга.
+    </div>
+    
     <div class="reset-info">✅ можно выбрать любое количество качеств. Результат покажет доминирующий стиль.</div>
     <div class="kamgu-footer">
         🌋 <span>Камчатский государственный университет им. Витуса Беринга</span> | Университет первооткрывателей
@@ -263,7 +264,7 @@
 </div>
 
 <script>
-    // ----- ДАННЫЕ ТИПОВ И КАЧЕСТВ (привязка к типам 1..7) -----
+    // ----- ДАННЫЕ ТИПОВ (без "архетип" в названиях, но типы остаются) -----
     const types = {
         1: {
             name: "Целеустремлённый и настойчивый",
@@ -295,7 +296,6 @@
         }
     };
 
-    // Список качеств с привязкой к типу (typeId)
     const traitsData = [
         { text: "Целеустремлённость", typeId: 1 },
         { text: "Упорство", typeId: 1 },
@@ -326,7 +326,6 @@
         { text: "Самостоятельность", typeId: 7 }
     ];
 
-    // Функция для случайного перемешивания массива
     function shuffleArray(arr) {
         for (let i = arr.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -335,7 +334,6 @@
         return arr;
     }
 
-    // Отрисовка перемешанных качеств
     function renderTraits() {
         const shuffled = shuffleArray([...traitsData]);
         const container = document.getElementById("traitsContainer");
@@ -360,7 +358,6 @@
         });
     }
 
-    // Подсчёт результатов
     function computeResult() {
         const checkboxes = document.querySelectorAll('#traitsContainer input[type="checkbox"]');
         const selectedTypes = { 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0 };
@@ -390,7 +387,6 @@
         return dominantType;
     }
 
-    // Отображение результата
     function showResult(typeId) {
         const typeData = types[typeId];
         if (!typeData) return;
@@ -398,15 +394,17 @@
         const resultDiv = document.getElementById("resultBlock");
         resultDiv.style.display = "block";
         resultDiv.innerHTML = `
-            <h3>🏆 Ваш ведущий тип: <span class="result-type">${typeData.name}</span></h3>
+            <h3>🏆 Ваш тип: <span class="result-type">${typeData.name}</span></h3>
             <div class="result-desc">${typeData.description.replace(/\n/g, '<br>')}</div>
             <hr style="margin: 1rem 0; border-color: #f04e2340;">
-            <p style="font-size:0.85rem; opacity:0.75;">🎯 Результат основан на выбранных качествах. Именно этот архетип оказался ближе всего к вашему представлению об идеальном первооткрывателе.</p>
+            <p style="font-size:0.85rem; opacity:0.75;">🎯 Результат основан на выбранных вами качествах.</p>
         `;
+        // Показать дополнительную фразу после результата
+        const disclaimer = document.getElementById("disclaimerMsg");
+        if (disclaimer) disclaimer.style.display = "block";
         resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
 
-    // Обработчик кнопки
     function onAnalyze() {
         const dominant = computeResult();
         if (dominant !== null) {
@@ -414,13 +412,14 @@
         }
     }
 
-    // Запуск
     document.addEventListener("DOMContentLoaded", () => {
         renderTraits();
         const btn = document.getElementById("submitBtn");
         btn.addEventListener("click", onAnalyze);
         const resultBlock = document.getElementById("resultBlock");
         if (resultBlock) resultBlock.style.display = "none";
+        const disclaimer = document.getElementById("disclaimerMsg");
+        if (disclaimer) disclaimer.style.display = "none";
     });
 </script>
 </body>
